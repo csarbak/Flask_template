@@ -32,9 +32,13 @@ def listing():
 
 
 @snaps.route('/add', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def add():
     """Add a new snap."""
+    
+    if not current_user.is_authenticated:
+        flash("login in first to use, redirected to login")
+        return redirect(url_for('users.login'))
 
     form = SnapForm()
 
