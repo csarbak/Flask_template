@@ -2,7 +2,7 @@ from flask import Blueprint, flash, render_template, url_for, redirect, g
 from flask_login import login_user, logout_user
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField
+from wtforms import StringField, PasswordField, EmailField,IntegerField
 from wtforms.validators import DataRequired, Length
 
 from .models import User
@@ -29,6 +29,12 @@ class RegisterForm(FlaskForm):
     password = PasswordField('new password', validators=[DataRequired(),
         Length(min=6)])
     email = EmailField('new email',validators=[DataRequired()] )
+    phone_number = StringField('new phone number',validators=[DataRequired()] )
+    # homePage_number = IntegerField('home page number',validators=[DataRequired()] )
+
+@users.route('/', methods=['GET', 'POST'])
+def home():
+    return render_template('users/homePage.html')
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,7 +74,12 @@ def login():
             return render_template('users/login.html', form=form)
 
         login_user(user, remember=True)
-        return redirect(url_for('snaps.listing'))
+        if ( (user.homePage_number) == '1'):
+            return redirect(url_for('cme.home'))
+        else:
+            flash("user belongs to no home page")
+            return render_template('users/contact.html')
+        #return redirect(url_for('snaps.listing'))
 
     return render_template('users/login.html', form=form)
 
@@ -90,13 +101,24 @@ def register():
         user = User.query.filter_by(username=form.username.data).first()
         user1 = User.query.filter_by(email=form.email.data).first()
         if user or user1:
-            flash("Username exists.")
+            flash("Username exists, Please login.")
             return render_template('users/login.html', form=form)
 
-        new_user = User(username=form.username.data, password=form.password.data,email=form.email.data )
+        new_user = User(username=form.username.data, password=form.password.data,email=form.email.data, phone_number=form.phone_number.data, homePage_number=0)
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user, remember=True)
-        return redirect(url_for('snaps.listing'))
+        if new_user.homePage_number ==1:
+            return redirect(url_for('cme.home'))
+        else:
+            flash("user belongs to no home page")
+            return render_template('users/contact.html')
+            #return redirect(url_for('snaps.listing')) # find page name and redirect acourdingly 
 
     return render_template('users/register.html', form=form)
+
+
+@users.route('/contact', methods=['GET', 'POST'])
+def contact():
+    return render_template('users/contact.html')
+

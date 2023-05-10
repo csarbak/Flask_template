@@ -17,9 +17,17 @@ flask_bcrypt = Bcrypt(app)
 from application.users import models as user_models
 from application.users.views import users
 from application.snaps.views import snaps
+from application.cme.views import cme
+from application.nasdaq.views import nasdaq
+from application.nyse.views import nyse
 
-app.register_blueprint(users, url_prefix='/users')
-app.register_blueprint(snaps, url_prefix='')
+
+
+app.register_blueprint(users, url_prefix='')
+app.register_blueprint(snaps, url_prefix='/snap')
+app.register_blueprint(cme, url_prefix='/cme')
+app.register_blueprint(nasdaq, url_prefix='/nasdaq')
+app.register_blueprint(nyse, url_prefix='/nyse')
 
 
 @login_manager.user_loader

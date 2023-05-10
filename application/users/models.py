@@ -19,13 +19,22 @@ class User(db.Model):
     #  The date/time that the user account was created on.
     created_on = db.Column(db.DateTime, default=datetime)
 
-    def __init__(self, email, username, password):
+    #there phone number
+    phone_number = db.Column(db.String(60))
+
+    #user homepage number
+    homePage_number = db.Column(db.Integer) #can be null
+
+    def __init__(self, email, username, phone_number, homePage_number, password):
         """Initialize the user object with the required attributes."""
 
         self.email = email
         self.username = username
+        self.phone_number = phone_number
+        self.homePage_number = homePage_number
         self.password = flask_bcrypt.generate_password_hash(password)
         self.created_on = datetime.datetime.utcnow()
+
 
     def __repr__(self):
         return '<User %r>' % self.username

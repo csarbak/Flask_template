@@ -1,6 +1,80 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+}
 
-{% block content %}
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  background-image: url("https://dev23.osfstudio.com/wp-content/uploads/2023/01/osf_mkt_data.jpeg");
+  min-height: 75%;
+}
+
+.menu {
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Links (sit on top) -->
+<!-- <div class="w3-top">
+  <div class="w3-row w3-padding w3-black">
+    <div class="w3-col s3">
+      <a href="#" class="w3-button w3-block w3-black">HOME</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#about" class="w3-button w3-block w3-black">ABOUT</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#menu" class="w3-button w3-block w3-black">LOGIN</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#where" class="w3-button w3-block w3-black">WHERE</a>
+    </div>
+    {% if not current_user.is_authenticated %}
+    <div class="w3-col s3">
+      <a href="{{ url_for('users.login') }}" class="w3-button w3-block w3-black">LOG IN</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="{{url_for('users.register')}}" class="w3-button w3-block w3-black">Register</a>
+    </div>
+    {% else %}
+    <div class="w3-col s3">
+      <a href="{{ url_for('users.logout') }}" class="w3-button w3-block w3-black">LOG OUT</a>
+    </div>
+    {% endif %}
+  </div>
+</div> -->
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">AI / ML / NEURAL-NET ALGOS</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+  <!-- CS temp removed 
+    <span class="w3-text-white" style="font-size:90px">the<br>Cafe</span>
+  -->
+  </div>
+  <div class="w3-display-bottomright w3-center w3-padding-large">
+    <span class="w3-text-white">FINANCIAL-MARKET-DATA</span>
+  </div>
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+
 
 <form action="{{ url_for('users.login')}}" method="post">
 	{{ form.hidden_tag() }}
@@ -17,5 +91,5 @@
 
 	<div><input type="submit" value="Login"></div>
 </form>
-
-{% endblock %}
+</body>
+</html>
